@@ -1,11 +1,26 @@
 import express from "express"
 import cors from "cors"
+import { connectDB } from "./config/db.js"
+import e from "express"
+import foodRouter from "./routes/foodRoute.js"
 
 const app = express()
 const port = 4000
 
 app.use(express.json())
 app.use(cors())
+
+//db connection
+
+connectDB();
+
+// api endpoints
+app.use("/api/food",foodRouter)
+app.use("/images",express.static('uploads'))
+
+
+
+
 
 app.get("/",(req,res)=>{
     res.send("API Working")
@@ -15,3 +30,5 @@ app.get("/",(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server started on http://localhost:${port}`)
 })
+
+// mongodb+srv://sunnysuper2016:601027@cluster0.1a4tifa.mongodb.net/?
